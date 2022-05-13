@@ -32,5 +32,14 @@ module.exports = class UserController {
         .json({ message: 'A senha e a confirmação precisam ser iguais!' });
       return;
     }
+
+    //check if user exists
+    const userExists = await User.findOne({ email: email });
+    if (userExists) {
+      res
+        .status(422)
+        .json({ message: 'Email já cadastrado, utilize outro email' });
+      return;
+    }
   }
 };
